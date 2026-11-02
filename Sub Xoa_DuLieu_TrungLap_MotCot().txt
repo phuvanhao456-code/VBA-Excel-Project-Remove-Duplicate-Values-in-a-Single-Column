@@ -1,0 +1,34 @@
+Sub Xoa_DuLieu_TrungLap_MotCot()
+
+    Dim ws As Worksheet
+    Dim DongDau As Long
+    Dim DongCuoi As Long
+    Dim TenCot As String
+
+    ' Xác đ?nh sheet c?n x? l?
+    On Error Resume Next
+    Set ws = ThisWorkbook.Worksheets("Data")
+    On Error GoTo 0
+
+    If ws Is Nothing Then
+        MsgBox "Không t?m th?y Sheet tên Data!", vbExclamation
+        Exit Sub
+    End If
+
+    DongDau = 1
+    TenCot = "C"
+
+    ' Xác đ?nh d?ng cu?i c?a c?t C
+    DongCuoi = ws.Cells(ws.Rows.Count, TenCot).End(xlUp).Row
+
+    If DongCuoi >= DongDau Then
+        ws.Range(TenCot & DongDau & ":" & TenCot & DongCuoi).RemoveDuplicates _
+            Columns:=1, Header:=xlNo
+    End If
+    ' Xóa d? li?u trùng l?p
+    ws.Range(TenCot & DongDau & ":" & TenCot & DongCuoi).RemoveDuplicates _
+        Columns:=1, Header:=xlYes
+
+    MsgBox "Đ? xóa d? li?u trùng l?p trong c?t " & TenCot, vbInformation
+
+End Sub
